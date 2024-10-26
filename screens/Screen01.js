@@ -1,6 +1,17 @@
-import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TextInput, View, FlatList } from "react-native";
 
 export default function Screen01({ navigation }) {
+    const [category, setCategory] = useState([
+        {key:1, name: 'Resort', img: require('../assets/image/resort.png')},
+        {key:2, name: 'Hotel', img: require('../assets/image/hostel.png')},
+        {key:3, name: 'Hostel', img: require('../assets/image/hotel.png')},
+        {key:4, name: 'Lodge', img: require('../assets/image/lodge.png')},
+        {key:5, name: 'Villa', img: require('../assets/image/villa.png')},
+        {key:6, name: 'Apartment', img: require('../assets/image/apartment.png')},
+        {key:7, name: 'Homestay', img: require('../assets/image/homestay.png')},
+        {key:8, name: 'See all', img: require('../assets/image/seeall.png')},
+    ]);
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -27,11 +38,27 @@ export default function Screen01({ navigation }) {
                         </View>
                     </View>
                 </View>
-                <View>
-                    <Text>Category</Text>
-                    <Image source={require('../assets/image/3gach.png')}></Image>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 20,
+                }}>
+                    <Text style={{fontSize: 18, fontWeight:'500'}}>Category</Text>
+                    <Image style={{height: 25, width: 25,}} source={require('../assets/image/3gach.png')}></Image>
                 </View>
+                <FlatList data={category}
+                    renderItem={({item}) => (
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 15,}}>
+                            <Image source={item.img}></Image>
+                            <Text>{item.name}</Text>
+                        </View>
+                    )}
+                numColumns={4}>
+
+                </FlatList>
             </View>
+
         </ScrollView>
     );
 }
@@ -42,7 +69,6 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         backgroundColor: '#5958b2',
-        height: '30%',
     },
     rowContainer1: {
         marginTop: 30,
@@ -54,6 +80,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingBottom: 20,
     },
     rowContainer: {
         flexDirection: 'row',
