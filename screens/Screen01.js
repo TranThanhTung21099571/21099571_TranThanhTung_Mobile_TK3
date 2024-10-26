@@ -4,31 +4,34 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, View, FlatList } from "
 
 export default function Screen01({ navigation }) {
     const [category, setCategory] = useState([
-        { key: 1, name: 'Resort', img: require('../assets/image/resort.png') },
-        { key: 2, name: 'Hotel', img: require('../assets/image/hostel.png') },
-        { key: 3, name: 'Hostel', img: require('../assets/image/hotel.png') },
-        { key: 4, name: 'Lodge', img: require('../assets/image/lodge.png') },
-        { key: 5, name: 'Villa', img: require('../assets/image/villa.png') },
-        { key: 6, name: 'Apartment', img: require('../assets/image/apartment.png') },
-        { key: 7, name: 'Homestay', img: require('../assets/image/homestay.png') },
-        { key: 8, name: 'See all', img: require('../assets/image/seeall.png') },
+        // { key: 1, name: 'Resort', img: require('../assets/image/resort.png') },
+        // { key: 2, name: 'Hotel', img: require('../assets/image/hostel.png') },
+        // { key: 3, name: 'Hostel', img: require('../assets/image/hotel.png') },
+        // { key: 4, name: 'Lodge', img: require('../assets/image/lodge.png') },
+        // { key: 5, name: 'Villa', img: require('../assets/image/villa.png') },
+        // { key: 6, name: 'Apartment', img: require('../assets/image/apartment.png') },
+        // { key: 7, name: 'Homestay', img: require('../assets/image/homestay.png') },
+        // { key: 8, name: 'See all', img: require('../assets/image/seeall.png') },
     ]);
     const [location, setLocation] = useState([
-        { key: 1, img: require('../assets/image/photo1.png') },
-        { key: 2, img: require('../assets/image/photo2.png') },
-        { key: 3, img: require('../assets/image/photo3.png') },
-        { key: 4, img: require('../assets/image/photo4.png') },
-        { key: 5, img: require('../assets/image/photo5.png') },
-        { key: 6, img: require('../assets/image/photo5.png') },
+        // { key: 1, img: require('../assets/image/photo1.png') },
+        // { key: 2, img: require('../assets/image/photo2.png') },
+        // { key: 3, img: require('../assets/image/photo3.png') },
+        // { key: 4, img: require('../assets/image/photo4.png') },
+        // { key: 5, img: require('../assets/image/photo5.png') },
+        // { key: 6, img: require('../assets/image/photo5.png') },
     ]);
     useEffect(() => {
         fetch('https://671b7a102c842d92c3802177.mockapi.io/Category')
-            .then(respone => respone.json())
-            .then
+        .then(r => r.json())
+        .then(data => setCategory(data))
 
-    })
-    const [itemCountCa, setItemCountCa] = useState(3);
-    const [itemCountLo, setItemCountLo] = useState(2);
+        fetch('https://671b7a102c842d92c3802177.mockapi.io/Location')
+        .then(r => r.json())
+        .then(data => setLocation(data))
+    }, []);
+    const [itemCountCa, setItemCountCa] = useState(4);
+    const [itemCountLo, setItemCountLo] = useState(3);
     const [itemCountRe, setItemCountRe] = useState(2);
     return (
         <ScrollView>
@@ -63,17 +66,18 @@ export default function Screen01({ navigation }) {
                     padding: 20,
                 }}>
                     <Text style={{ fontSize: 18, fontWeight: '500' }}>Category</Text>
-                    <Image style={{ height: 25, width: 25, }} source={require('../assets/image/3gach.png')}></Image>
+                    <TouchableOpacity onPress={() => setItemCountCa(category.length)}>
+                        <Image style={{ height: 25, width: 25, }} source={require('../assets/image/3gach.png')}></Image>
+                    </TouchableOpacity>
                 </View>
-                <FlatList data={category}
+                <FlatList data={category.slice(0, itemCountCa)}
                     renderItem={({ item }) => (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 15, }}>
-                            <Image source={item.img}></Image>
-                            <Text>{item.name}</Text>
+                        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginBottom: 15, marginLeft: 10,}}>
+                            <Image style={{width: 60, height: 60,}} source={item.img}></Image>
+                            <Text style={{}}>{item.name}</Text>
                         </View>
                     )}
                     numColumns={4}>
-
                 </FlatList>
                 <View style={{
                     flexDirection: 'row',
@@ -82,11 +86,11 @@ export default function Screen01({ navigation }) {
                     padding: 20,
                 }}>
                     <Text style={{ fontSize: 18, fontWeight: '500' }}>Popular Destination</Text>
-                    <TouchableOpacity onPress={() => setItemCountCa(category.length)}>
+                    <TouchableOpacity onPress={() => setItemCountCa(location.length)}>
                         <Image style={{ height: 25, width: 25, }} source={require('../assets/image/3gach.png')}></Image>
                     </TouchableOpacity>
                 </View>
-                <FlatList data={location.slice(0, itemCountCa)}
+                <FlatList data={location.slice(0, itemCountLo)}
                     renderItem={({ item }) => (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 15, }}>
                             <Image style={{width: 100, height: 100, borderRadius: 10,}} source={item.img}></Image>
@@ -102,7 +106,7 @@ export default function Screen01({ navigation }) {
                     padding: 20,
                 }}>
                     <Text style={{ fontSize: 18, fontWeight: '500' }}>Recommended</Text>
-                    <TouchableOpacity onPress={() => setItemCountRe(category.length)}>
+                    <TouchableOpacity onPress={() => setItemCountRe(location.length)}>
                         <Image style={{ height: 25, width: 25, }} source={require('../assets/image/3gach.png')}></Image>
                     </TouchableOpacity>
                 </View>
